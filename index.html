@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 
 <style>
-  /* Layout: one measured column on a warm clinical ground; quiet rule-separated bands,
-     no cards except where a thing is genuinely a separate object. */
   :root {
     --paper:   #f7f5f1;
     --surface: #ffffff;
@@ -68,7 +66,6 @@
     padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
 
-  /* ---- header ---- */
   header { border-bottom: 1px solid var(--rule); }
   header .wrap {
     padding-block: 18px;
@@ -94,7 +91,6 @@
     white-space: nowrap;
   }
 
-  /* ---- hero ---- */
   .hero .wrap { padding-block: 56px 44px; }
   h1 {
     font-family: var(--display);
@@ -121,7 +117,6 @@
     padding-left: 14px;
   }
 
-  /* ---- bands ---- */
   section { border-top: 1px solid var(--rule); }
   section .wrap { padding-block: 44px; }
   h2 {
@@ -151,7 +146,6 @@
   .col p { margin: 0; font-size: 0.95rem; }
   .col .min { min-width: 0; }
 
-  /* ---- won't do ---- */
   .wont { display: grid; gap: 14px; }
   .wont div {
     display: grid;
@@ -169,12 +163,10 @@
   .wont p { margin: 0; }
   .wont strong { font-weight: 600; }
 
-  /* ---- footer ---- */
   footer { border-top: 1px solid var(--rule); background: var(--surface); }
   footer .wrap { padding-block: 30px 44px; }
   footer p { margin: 0 0 10px; font-size: 0.86rem; color: var(--muted); max-width: 62ch; }
   footer .tel { color: var(--ink); font-variant-numeric: tabular-nums; }
-
 
   @media (prefers-reduced-motion: no-preference) {
     .hero .wrap > * { animation: rise .5s ease both; }
@@ -246,8 +238,8 @@
     <div class="cols">
       <div class="col min">
         <h3>Content</h3>
-        <p>Thirty questions, written and verified by clinic staff, loaded in English and Spanish.
-          Nothing is scraped from the website.</p>
+        <p>Thirty questions, answered and verified by our team from the clinic's own information,
+          then loaded in English and Spanish. Nothing is scraped from a website.</p>
       </div>
       <div class="col min">
         <h3>Language</h3>
@@ -256,10 +248,11 @@
       </div>
       <div class="col min">
         <h3>Updates</h3>
-        <p>An answer can be changed and published the same day by clinic staff. No developer, no
-          rebuild, no ticket.</p>
+        <p>We maintain it. Tell us an answer has changed and it is live the same day — no
+          developer, no rebuild, and nothing for your staff to learn or remember to do.</p>
       </div>
     </div>
+  </div>
 </section>
 
 <footer>
@@ -272,16 +265,16 @@
   </div>
 </footer>
 
-<script>
-  var PROJECT_ID = '6af9c73cd0d96c54cccf4ac1';
-
-  (function (d, t) {
+<script type="text/javascript">
+  (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function () {
+      v.onload = function() {
         window.voiceflow.chat.load({
-          verify: { projectID: PROJECT_ID },
+          verify: { projectID: '6af9c73cd0d96c54cccf4ac0' },
           url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
+          voice: {
+            url: 'https://runtime-api.voiceflow.com'
+          },
           assistant: {
             title: 'Juana · Lestonnac Free Clinic',
             description: 'General information · Información general',
@@ -296,10 +289,8 @@
             }
           }
         });
-      };
-    v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
-    v.type = 'text/javascript';
-    s.parentNode.insertBefore(v, s);
+      }
+      v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs'; v.type = 'text/javascript'; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
 </body>
