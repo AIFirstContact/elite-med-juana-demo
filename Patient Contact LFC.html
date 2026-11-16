@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A bilingual assistant for Lestonnac Free Clinic, built by Elite Med Listings.">
+<title>Meet Juana</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+  /* Layout: one measured column on a warm clinical ground; quiet rule-separated bands,
+     no cards except where a thing is genuinely a separate object. */
+  :root {
+    --paper:   #f7f5f1;
+    --surface: #ffffff;
+    --ink:     #16202b;
+    --muted:   #5c6974;
+    --rule:    #ddd8d0;
+    --teal:    #1d6b6b;
+    --teal-dim:#e3efed;
+    --amber:   #8a5a1b;
+
+    --display: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --body:    "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:   #11171d;
+      --surface: #19212a;
+      --ink:     #e8e6e1;
+      --muted:   #9aa6b1;
+      --rule:    #2b3640;
+      --teal:    #5fb8b0;
+      --teal-dim:#17312f;
+      --amber:   #d6a35c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:   #11171d;
+    --surface: #19212a;
+    --ink:     #e8e6e1;
+    --muted:   #9aa6b1;
+    --rule:    #2b3640;
+    --teal:    #5fb8b0;
+    --teal-dim:#17312f;
+    --amber:   #d6a35c;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  /* ---- header ---- */
+  header { border-bottom: 1px solid var(--rule); }
+  header .wrap {
+    padding-block: 18px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .mark {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    margin-right: auto;
+  }
+  .mark span { color: var(--muted); font-weight: 400; }
+  .pill {
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--teal-dim);
+    color: var(--teal);
+    white-space: nowrap;
+  }
+
+  /* ---- hero ---- */
+  .hero .wrap { padding-block: 56px 44px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 6vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 0 18px;
+  }
+  .lede {
+    font-size: 1.12rem;
+    color: var(--muted);
+    max-width: 58ch;
+    margin: 0 0 28px;
+  }
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  .cue {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 0.95rem;
+    color: var(--teal);
+    border-left: 2px solid var(--teal);
+    padding-left: 14px;
+  }
+
+  /* ---- bands ---- */
+  section { border-top: 1px solid var(--rule); }
+  section .wrap { padding-block: 44px; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  .sub { color: var(--muted); margin: 0 0 26px; max-width: 56ch; }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 26px 32px;
+  }
+  .col h3 {
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .col p { margin: 0; font-size: 0.95rem; }
+  .col .min { min-width: 0; }
+
+  /* ---- won't do ---- */
+  .wont { display: grid; gap: 14px; }
+  .wont div {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    align-items: start;
+    min-width: 0;
+  }
+  .wont .no {
+    font-family: var(--display);
+    color: var(--amber);
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  .wont p { margin: 0; }
+  .wont strong { font-weight: 600; }
+
+  /* ---- footer ---- */
+  footer { border-top: 1px solid var(--rule); background: var(--surface); }
+  footer .wrap { padding-block: 30px 44px; }
+  footer p { margin: 0 0 10px; font-size: 0.86rem; color: var(--muted); max-width: 62ch; }
+  footer .tel { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .notice {
+    display: none;
+    margin-top: 26px;
+    border: 1px dashed var(--amber);
+    border-radius: 8px;
+    padding: 13px 15px;
+    font-size: 0.88rem;
+    color: var(--amber);
+  }
+  .notice.show { display: block; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero .wrap > * { animation: rise .5s ease both; }
+    .hero .wrap > *:nth-child(2) { animation-delay: .06s; }
+    .hero .wrap > *:nth-child(3) { animation-delay: .12s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="mark">Elite Med Listings <span>· bilingual patient contact</span></div>
+    <div class="pill">Demonstration</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Juana answers the questions that never needed a person.</h1>
+    <p class="lede">
+      A bilingual assistant for <strong>Lestonnac Free Clinic</strong>, built on the clinic's own
+      answers. Hours for all six locations, eligibility, what to bring, volunteering, donations.
+      She answers in English or Spanish, whichever the patient writes in — and she hands off the
+      moment a question stops being general.
+    </p>
+    <p class="cue">Open the chat in the corner. Ask her anything, in English or Spanish.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>What she will not do</h2>
+    <p class="sub">
+      Each of these is worth trying to break. The last one is the point: a product that
+      guesses is a liability on a clinic website, not a feature.
+    </p>
+    <div class="wont">
+      <div>
+        <div class="no">—</div>
+        <p><strong>No appointments.</strong> She cannot book, move, confirm or cancel anything.
+          Every appointment question goes to <span class="tel">(714) 551-9695</span>, or
+          <span class="tel">(714) 551-9703</span> in Spanish.</p>
+      </div>
+      <div>
+        <div class="no">—</div>
+        <p><strong>No patient information.</strong> She has no connection to any patient system
+          and cannot look up a record, a result or a medication. Nothing typed into the chat
+          goes into a patient record.</p>
+      </div>
+      <div>
+        <div class="no">—</div>
+        <p><strong>No medical advice.</strong> If someone describes a symptom, she answers the
+          general part of the question and routes the rest to a person.</p>
+      </div>
+      <div>
+        <div class="no">—</div>
+        <p><strong>No guessing.</strong> She answers only from the clinic's own verified answers.
+          When something isn't there, she says she doesn't have it and offers a person — instead
+          of inventing a plausible one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it is built</h2>
+    <div class="cols">
+      <div class="col min">
+        <h3>Content</h3>
+        <p>Thirty questions, written and verified by clinic staff, loaded in English and Spanish.
+          Nothing is scraped from the website.</p>
+      </div>
+      <div class="col min">
+        <h3>Language</h3>
+        <p>One widget, not two. She replies in whichever language the patient writes in, from the
+          Spanish we wrote — not a translation made on the spot.</p>
+      </div>
+      <div class="col min">
+        <h3>Updates</h3>
+        <p>An answer can be changed and published the same day by clinic staff. No developer, no
+          rebuild, no ticket.</p>
+      </div>
+    </div>
+    <div class="notice" id="notice">
+      The assistant isn't connected on this page yet — the Voiceflow project ID still needs to be
+      added. Everything else here is final.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>This is a demonstration page built by Elite Med Listings.</strong> It is not the
+      Lestonnac Free Clinic website and is not operated by the clinic.</p>
+    <p>For appointments or anything about your care, call the clinic directly:
+      <span class="tel">(714) 551-9695</span> · <span class="tel">(714) 551-9703</span> en español.
+      In an emergency, call 911.</p>
+  </div>
+</footer>
+
+<script>
+  var PROJECT_ID = 'REPLACE_WITH_PROJECT_ID';
+
+  if (PROJECT_ID === 'REPLACE_WITH_PROJECT_ID') {
+    document.getElementById('notice').classList.add('show');
+  } else {
+    (function (d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function () {
+        window.voiceflow.chat.load({
+          verify: { projectID: PROJECT_ID },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          assistant: {
+            title: 'Juana · Lestonnac Free Clinic',
+            description: 'General information · Información general',
+            color: '#1d6b6b',
+            banner: {
+              title: 'No appointments · No patient information',
+              description: 'Nothing you type here goes into a patient record. ' +
+                'For appointments, call (714) 551-9695 · (714) 551-9703 en español.'
+            },
+            aiDisclaimer: {
+              text: 'Answers are AI-generated · Respuestas generadas por IA'
+            }
+          }
+        });
+      };
+      v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
+      v.type = 'text/javascript';
+      s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  }
+</script>
+</body>
+</html>
